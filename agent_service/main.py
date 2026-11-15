@@ -57,8 +57,11 @@ def create_app(graph: Any | None = None, model_label: str = "custom", embedder_n
         order: list[str] = []
         for m in messages[start + 1:]:
             if isinstance(m, AIMessage):
+                forced = bool(m.additional_kwargs.get("guardrail"))
                 for c in m.tool_calls or []:
                     calls[c["id"]] = {"tool": c["name"], "args": c["args"], "result": None}
+                    if forced:
+                        calls[c["id"]]["forced"] = True  # run by a guardrail, not requested by the model
                     order.append(c["id"])
             elif isinstance(m, ToolMessage) and m.tool_call_id in calls:
                 text = m.content if isinstance(m.content, str) else json.dumps(m.content)
@@ -72,11 +75,22 @@ def create_app(graph: Any | None = None, model_label: str = "custom", embedder_n
         if interrupts:
             pending = interrupts[0].value
         replies = [m for m in msgs if isinstance(m, AIMessage) and m.content]
+        start = max((i for i, m in enumerate(msgs) if isinstance(m, HumanMessage)), default=-1)
+        turn = msgs[start + 1:]
+        turn_replies = [m for m in turn if isinstance(m, AIMessage) and m.content]
+        info = turn_replies[-1].additional_kwargs.get("guardrails", {}) if turn_replies else {}
         return {
             "reply": (replies[-1].content if replies else ""),
             "pending_approval": pending,
             "tool_trace": _trace(msgs),
             "model": state["model"],
+            # What the guardrails did this turn (see guardrails.py): useful to see how much the model needed them.
+            "guardrails": {
+                "forced_policy_search": any(isinstance(m, AIMessage) and m.additional_kwargs.get("guardrail")
+                                            for m in turn),
+                "citations_removed": info.get("citations_removed", []),
+                "outcome_replaced": info.get("outcome_replaced", False),
+            },
         }
 
     cfg = lambda tid: {"configurable": {"thread_id": tid}, "recursion_limit": 25}

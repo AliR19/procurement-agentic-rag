@@ -48,6 +48,7 @@ flowchart LR
 | `agent_service/rag/` | Heading-aware chunking, pluggable embeddings, ChromaDB vector search, BM25 keyword search, Reciprocal Rank Fusion, metadata filter, citations. |
 | `agent_service/matching.py` | Deterministic three-way match and approval-authority rules (the LLM does not do money math). |
 | `agent_service/tools.py` | The six tools the agent can call. |
+| `agent_service/guardrails.py` | Deterministic checks around the model: forced policy search, citation verification, the true outcome of a filing. |
 | `agent_service/agent.py` | LangGraph graph: `agent -> tools -> approval -> agent`, with `interrupt()` before write actions. |
 | `agent_service/main.py` | Chat API (`/chat`, `/approve`, `/health`) and the web UI. |
 | `data/policies/` | Fictional policies (POL-100..500) and two supplier agreements. |
@@ -60,6 +61,10 @@ flowchart LR
   The test suite asserts nothing is written before approval and that rejection writes nothing.
 - **Hybrid search.** Keyword search (BM25) catches exact terms like "POL-300" or "CAD 5,000"; vector
   search catches paraphrases. Results are merged with Reciprocal Rank Fusion.
+- **Guardrails, because models slip.** A model can skip a tool, quote a citation it never retrieved, or misreport
+  what just happened. After a failed match the policy search is run if the model skipped it, citations in the
+  answer must match what the search returned (others are removed), and the real outcome of a filing is stated.
+  Tests use a scripted, misbehaving model to prove each one.
 - **Pluggable model.** `LLM_PROVIDER` switches between a local Ollama model, OpenAI, or a no-LLM demo mode.
 
 ## Quick start
@@ -109,7 +114,7 @@ docker compose up --build        # UI at http://localhost:8002
 ## Tests
 
 ```bash
-python -m pytest -q      # 38 tests: matching rules, ERP API, chunking, retrieval, agent flow, approval gate, HTTP API
+python -m pytest -q      # 49 tests: matching rules, ERP API, chunking, retrieval, agent flow, approval gate, guardrails, HTTP API
 ```
 
 ## Demo data

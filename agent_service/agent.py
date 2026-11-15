@@ -3,7 +3,10 @@
     START -> agent --(tool calls)--> tools -> approval -> agent -> ... -> END
                   \\--(no tool calls)--------------------------------> END
 
-* `agent`    : the LLM decides which tools to call (or answers).
+* `agent`    : the LLM decides which tools to call (or answers). Before a final answer is accepted it
+               passes the guardrails (guardrails.py): if a PO comparison found discrepancies and the
+               policy was never searched, the search is run and the model is asked again; citations the
+               search did not return are removed; the real outcome of a write is stated.
 * `tools`    : runs read-only tools immediately.
 * `approval` : pauses the graph with `interrupt()` before any tool that WRITES to the ERP.
                The run resumes only when a human approves or rejects.
@@ -11,6 +14,7 @@
 from __future__ import annotations
 
 import json
+import uuid
 from typing import Any
 
 from langchain_core.messages import AIMessage, SystemMessage, ToolMessage
@@ -18,6 +22,7 @@ from langgraph.checkpoint.memory import MemorySaver
 from langgraph.graph import END, START, MessagesState, StateGraph
 from langgraph.types import interrupt
 
+from .guardrails import POLICY_TOOL, finalize_reply, missing_policy_search
 from .tools import SENSITIVE_TOOLS
 
 SYSTEM_PROMPT = """You are a procurement assistant for an accounts-payable and purchasing team.
@@ -26,11 +31,12 @@ Rules:
 - Use tools to get facts. Never invent purchase orders, invoices, amounts or policy text.
 - For PO/invoice questions: fetch the PO and invoice, run compare_po_and_invoice (do not do the
   arithmetic yourself), and search_procurement_policy for the relevant rules.
-- Cite policy statements using the citation strings returned by search_procurement_policy,
-  for example [POL-100 2. Matching tolerances].
+- Cite policy statements using the citation strings exactly as search_procurement_policy returned
+  them (they appear in square brackets). Never write a citation that the tool did not return.
 - Explain discrepancies clearly with amounts in CAD, who must approve according to policy, and offer
   to file an exception report. Only call create_exception_report after the user asks for it.
-  Filing requires human approval, so tell the user it is waiting for approval.
+  Filing needs human approval: the system pauses and asks a person. When the tool result comes back,
+  report exactly what it says (the report id, or that the reviewer rejected it).
 - If data is missing, say so plainly."""
 
 
@@ -55,6 +61,16 @@ def build_graph(llm: Any, tools: list[Any], checkpointer: Any | None = None):
 
     def agent(state: MessagesState) -> dict[str, Any]:
         reply = llm_with_tools.invoke([SystemMessage(SYSTEM_PROMPT)] + state["messages"])
+        if not reply.tool_calls:
+            query = missing_policy_search(state["messages"])
+            if query:  # about to answer a failed match without the policy: run the search, then ask again
+                call = {"name": POLICY_TOOL, "args": {"query": query}, "id": f"guardrail-{uuid.uuid4().hex[:8]}",
+                        "type": "tool_call"}
+                return {"messages": [
+                    AIMessage(content="", tool_calls=[call], additional_kwargs={"guardrail": "forced_policy_search"}),
+                    execute(call),
+                ]}
+            reply = finalize_reply(reply, state["messages"])
         return {"messages": [reply]}
 
     def run_safe_tools(state: MessagesState) -> dict[str, Any]:
@@ -81,6 +97,8 @@ def build_graph(llm: Any, tools: list[Any], checkpointer: Any | None = None):
 
     def after_agent(state: MessagesState) -> str:
         last = state["messages"][-1]
+        if isinstance(last, ToolMessage):  # a guardrail ran a tool: let the model answer again
+            return "agent"
         return "tools" if isinstance(last, AIMessage) and last.tool_calls else END
 
     g = StateGraph(MessagesState)
@@ -88,7 +106,7 @@ def build_graph(llm: Any, tools: list[Any], checkpointer: Any | None = None):
     g.add_node("tools", run_safe_tools)
     g.add_node("approval", approval_gate)
     g.add_edge(START, "agent")
-    g.add_conditional_edges("agent", after_agent, {"tools": "tools", END: END})
+    g.add_conditional_edges("agent", after_agent, {"tools": "tools", "agent": "agent", END: END})
     g.add_edge("tools", "approval")
     g.add_edge("approval", "agent")
     return g.compile(checkpointer=checkpointer or MemorySaver())

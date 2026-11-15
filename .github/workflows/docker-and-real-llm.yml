@@ -147,9 +147,12 @@ jobs:
           print("\n--- model answer ---\n" + r1["reply"] + "\n")
           print("tools called:", tools)
           called = lambda name: name in tools
-          notes.append(("Called compare_po_and_invoice", called("compare_po_and_invoice")))
-          notes.append(("Called search_procurement_policy", called("search_procurement_policy")))
-          notes.append(("Answer cites a policy section like [POL-100 ...]", "[POL-" in r1["reply"]))
+          guard1 = r1["guardrails"]
+          print("guardrails (turn 1):", guard1)
+          notes.append(("Model called compare_po_and_invoice", called("compare_po_and_invoice")))
+          notes.append(("Model searched the policy by itself (no guardrail needed)", not guard1["forced_policy_search"]))
+          notes.append(("Model cited only retrieved policy text (no citations removed)", not guard1["citations_removed"]))
+          notes.append(("Final answer cites a retrieved policy section", "[POL-" in r1["reply"] or "[AGR-" in r1["reply"]))
           notes.append(("Answer mentions PO 450012", "450012" in r1["reply"]))
           ok = called("compare_po_and_invoice")
 
@@ -164,13 +167,16 @@ jobs:
                   r3 = call("http://localhost:8002/approve", {"thread_id": tid, "approved": True})
                   filed = r3["reply"]
                   print("after approval:", filed)
+                  print("guardrails (approval turn):", r3["guardrails"])
                   notes.append(("Report filed after approval", len(erp_reports()) == 1))
+                  notes.append(("Model stated the real outcome itself (message not replaced)", not r3["guardrails"]["outcome_replaced"]))
           except Exception as exc:  # report, do not hide, a failure of the second turn
               notes.append((f"Second turn failed: {type(exc).__name__}: {exc}", False))
 
           with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as f:
               f.write(f"## Real LLM run: `{health['model']}` (CPU only, simulated data)\n\n")
               f.write(f"Tools called for PO 450012: `{', '.join(tools) or 'none'}`\n\n")
+              f.write(f"Guardrails on the first answer: `{json.dumps(r1['guardrails'])}`\n\n")
               for label, value in notes:
                   f.write(f"- {'PASS' if value else 'NOT MET'}: {label}\n")
               f.write("\n### Model answer to the first question\n\n" + r1["reply"] + "\n")

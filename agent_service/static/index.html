@@ -86,7 +86,9 @@ function render(data) {
     const d = document.createElement('div'); d.className = 'trace';
     const b = document.createElement('b'); b.textContent = t.tool;
     const c = document.createElement('code'); c.textContent = ' ' + JSON.stringify(t.args);
-    d.append(b, c); traceEl.appendChild(d);
+    d.append(b, c);
+    if (t.forced) { const f = document.createElement('i'); f.textContent = ' (run by guardrail)'; d.append(f); }
+    traceEl.appendChild(d);
   });
   approvalEl.innerHTML = '';
   if (data.pending_approval) {
