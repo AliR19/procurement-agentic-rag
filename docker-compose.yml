@@ -1,0 +1,27 @@
+# Two services, like an app talking to an enterprise system:
+#   erp   - mock ERP API (simulated purchase orders, invoices, suppliers)
+#   agent - RAG + LangGraph agent + web UI
+services:
+  erp:
+    build: .
+    command: uvicorn erp_api.main:app --host 0.0.0.0 --port 8001
+    environment:
+      ERP_API_KEY: ${ERP_API_KEY:-dev-key}
+    ports: ["8001:8001"]
+
+  agent:
+    build: .
+    command: uvicorn agent_service.main:app --host 0.0.0.0 --port 8002
+    depends_on: [erp]
+    environment:
+      ERP_BASE_URL: http://erp:8001
+      ERP_API_KEY: ${ERP_API_KEY:-dev-key}
+      LLM_PROVIDER: ${LLM_PROVIDER:-demo}
+      OLLAMA_MODEL: ${OLLAMA_MODEL:-llama3.1}
+      # Reach Ollama running on the host machine
+      OLLAMA_BASE_URL: ${OLLAMA_BASE_URL:-http://host.docker.internal:11434}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      OPENAI_MODEL: ${OPENAI_MODEL:-gpt-4o-mini}
+      EMBEDDING_BACKEND: ${EMBEDDING_BACKEND:-auto}
+    extra_hosts: ["host.docker.internal:host-gateway"]
+    ports: ["8002:8002"]

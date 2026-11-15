@@ -1,0 +1,2429 @@
+{
+  "_note": "SIMULATED DATA - fictional suppliers and documents for a portfolio demo.",
+  "suppliers": [
+    {
+      "supplier_id": "S1001",
+      "name": "Northwind Industrial Supply",
+      "country": "Canada",
+      "payment_terms": "Net 30",
+      "rating": 4.6,
+      "contact_email": "accounts@northwind.example.com",
+      "contract_id": "CTR-1001"
+    },
+    {
+      "supplier_id": "S1002",
+      "name": "Maple Ridge Components",
+      "country": "Canada",
+      "payment_terms": "Net 45",
+      "rating": 4.2,
+      "contact_email": "accounts@maple.example.com",
+      "contract_id": "CTR-1002"
+    },
+    {
+      "supplier_id": "S1003",
+      "name": "Harbourline Packaging",
+      "country": "Canada",
+      "payment_terms": "Net 30",
+      "rating": 3.9,
+      "contact_email": "accounts@harbourline.example.com",
+      "contract_id": "CTR-1003"
+    },
+    {
+      "supplier_id": "S1004",
+      "name": "Cedar Peak Electronics",
+      "country": "United States",
+      "payment_terms": "Net 30",
+      "rating": 4.4,
+      "contact_email": "accounts@cedar.example.com",
+      "contract_id": "CTR-1004"
+    },
+    {
+      "supplier_id": "S1005",
+      "name": "Atlantic Fastener Co.",
+      "country": "Canada",
+      "payment_terms": "Net 60",
+      "rating": 4.0,
+      "contact_email": "accounts@atlantic.example.com",
+      "contract_id": "CTR-1005"
+    },
+    {
+      "supplier_id": "S1006",
+      "name": "Lakeshore Office Systems",
+      "country": "Canada",
+      "payment_terms": "Net 30",
+      "rating": 4.7,
+      "contact_email": "accounts@lakeshore.example.com",
+      "contract_id": "CTR-1006"
+    },
+    {
+      "supplier_id": "S1007",
+      "name": "Redwood Safety Gear",
+      "country": "United States",
+      "payment_terms": "Net 45",
+      "rating": 3.8,
+      "contact_email": "accounts@redwood.example.com",
+      "contract_id": "CTR-1007"
+    },
+    {
+      "supplier_id": "S1008",
+      "name": "Tidewater Logistics Parts",
+      "country": "Canada",
+      "payment_terms": "Net 30",
+      "rating": 4.1,
+      "contact_email": "accounts@tidewater.example.com",
+      "contract_id": "CTR-1008"
+    }
+  ],
+  "purchase_orders": [
+    {
+      "po_number": "450001",
+      "supplier_id": "S1002",
+      "status": "Received",
+      "currency": "CAD",
+      "created_date": "2026-06-04",
+      "expected_delivery": "2026-06-17",
+      "actual_delivery": "2026-06-17",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1004",
+          "description": "Safety gloves (pack of 12)",
+          "quantity": 20,
+          "unit_price": 32.75
+        }
+      ],
+      "total": 655.0
+    },
+    {
+      "po_number": "450002",
+      "supplier_id": "S1002",
+      "status": "Received",
+      "currency": "CAD",
+      "created_date": "2026-08-26",
+      "expected_delivery": "2026-09-14",
+      "actual_delivery": "2026-09-14",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1010",
+          "description": "Printer toner cartridge",
+          "quantity": 40,
+          "unit_price": 87.4
+        }
+      ],
+      "total": 3496.0
+    },
+    {
+      "po_number": "450003",
+      "supplier_id": "S1001",
+      "status": "Received",
+      "currency": "CAD",
+      "created_date": "2026-06-04",
+      "expected_delivery": "2026-06-12",
+      "actual_delivery": "2026-06-12",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1004",
+          "description": "Safety gloves (pack of 12)",
+          "quantity": 50,
+          "unit_price": 32.75
+        }
+      ],
+      "total": 1637.5
+    },
+    {
+      "po_number": "450004",
+      "supplier_id": "S1001",
+      "status": "Received",
+      "currency": "CAD",
+      "created_date": "2026-08-11",
+      "expected_delivery": "2026-08-21",
+      "actual_delivery": "2026-08-21",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1009",
+          "description": "Steel shelving unit",
+          "quantity": 40,
+          "unit_price": 310.0
+        },
+        {
+          "line": 2,
+          "sku": "SKU-1004",
+          "description": "Safety gloves (pack of 12)",
+          "quantity": 40,
+          "unit_price": 32.75
+        },
+        {
+          "line": 3,
+          "sku": "SKU-1010",
+          "description": "Printer toner cartridge",
+          "quantity": 25,
+          "unit_price": 87.4
+        }
+      ],
+      "total": 15895.0
+    },
+    {
+      "po_number": "450005",
+      "supplier_id": "S1001",
+      "status": "Received",
+      "currency": "CAD",
+      "created_date": "2026-09-06",
+      "expected_delivery": "2026-09-15",
+      "actual_delivery": "2026-09-15",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1007",
+          "description": "Ergonomic office chair",
+          "quantity": 25,
+          "unit_price": 245.0
+        },
+        {
+          "line": 2,
+          "sku": "SKU-1005",
+          "description": "Corrugated shipping box 18x12x10",
+          "quantity": 20,
+          "unit_price": 1.85
+        },
+        {
+          "line": 3,
+          "sku": "SKU-1004",
+          "description": "Safety gloves (pack of 12)",
+          "quantity": 25,
+          "unit_price": 32.75
+        }
+      ],
+      "total": 6980.75
+    },
+    {
+      "po_number": "450006",
+      "supplier_id": "S1002",
+      "status": "Received",
+      "currency": "CAD",
+      "created_date": "2026-06-12",
+      "expected_delivery": "2026-06-29",
+      "actual_delivery": "2026-06-29",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1006",
+          "description": "LED panel light 60W",
+          "quantity": 25,
+          "unit_price": 64.2
+        }
+      ],
+      "total": 1605.0
+    },
+    {
+      "po_number": "450007",
+      "supplier_id": "S1005",
+      "status": "Received",
+      "currency": "CAD",
+      "created_date": "2026-09-12",
+      "expected_delivery": "2026-09-18",
+      "actual_delivery": "2026-09-28",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1008",
+          "description": "Barcode scanner (wireless)",
+          "quantity": 50,
+          "unit_price": 129.0
+        },
+        {
+          "line": 2,
+          "sku": "SKU-1002",
+          "description": "Industrial pallet wrap 20in",
+          "quantity": 40,
+          "unit_price": 24.0
+        },
+        {
+          "line": 3,
+          "sku": "SKU-1002",
+          "description": "Industrial pallet wrap 20in",
+          "quantity": 50,
+          "unit_price": 24.0
+        }
+      ],
+      "total": 8610.0
+    },
+    {
+      "po_number": "450008",
+      "supplier_id": "S1005",
+      "status": "Received",
+      "currency": "CAD",
+      "created_date": "2026-09-15",
+      "expected_delivery": "2026-10-06",
+      "actual_delivery": "2026-10-06",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1006",
+          "description": "LED panel light 60W",
+          "quantity": 50,
+          "unit_price": 64.2
+        },
+        {
+          "line": 2,
+          "sku": "SKU-1004",
+          "description": "Safety gloves (pack of 12)",
+          "quantity": 100,
+          "unit_price": 32.75
+        },
+        {
+          "line": 3,
+          "sku": "SKU-1002",
+          "description": "Industrial pallet wrap 20in",
+          "quantity": 10,
+          "unit_price": 24.0
+        }
+      ],
+      "total": 6725.0
+    },
+    {
+      "po_number": "450009",
+      "supplier_id": "S1004",
+      "status": "Received",
+      "currency": "CAD",
+      "created_date": "2026-09-07",
+      "expected_delivery": "2026-09-18",
+      "actual_delivery": "2026-09-18",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1004",
+          "description": "Safety gloves (pack of 12)",
+          "quantity": 10,
+          "unit_price": 32.75
+        }
+      ],
+      "total": 327.5
+    },
+    {
+      "po_number": "450010",
+      "supplier_id": "S1007",
+      "status": "Received",
+      "currency": "CAD",
+      "created_date": "2026-07-06",
+      "expected_delivery": "2026-07-22",
+      "actual_delivery": "2026-07-22",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1006",
+          "description": "LED panel light 60W",
+          "quantity": 20,
+          "unit_price": 64.2
+        },
+        {
+          "line": 2,
+          "sku": "SKU-1006",
+          "description": "LED panel light 60W",
+          "quantity": 25,
+          "unit_price": 64.2
+        },
+        {
+          "line": 3,
+          "sku": "SKU-1004",
+          "description": "Safety gloves (pack of 12)",
+          "quantity": 100,
+          "unit_price": 32.75
+        }
+      ],
+      "total": 6164.0
+    },
+    {
+      "po_number": "450011",
+      "supplier_id": "S1005",
+      "status": "Received",
+      "currency": "CAD",
+      "created_date": "2026-08-29",
+      "expected_delivery": "2026-09-18",
+      "actual_delivery": "2026-09-18",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1002",
+          "description": "Industrial pallet wrap 20in",
+          "quantity": 50,
+          "unit_price": 24.0
+        },
+        {
+          "line": 2,
+          "sku": "SKU-1003",
+          "description": "Laptop docking station",
+          "quantity": 50,
+          "unit_price": 189.0
+        },
+        {
+          "line": 3,
+          "sku": "SKU-1004",
+          "description": "Safety gloves (pack of 12)",
+          "quantity": 20,
+          "unit_price": 32.75
+        }
+      ],
+      "total": 11305.0
+    },
+    {
+      "po_number": "450012",
+      "supplier_id": "S1008",
+      "status": "Received",
+      "currency": "CAD",
+      "created_date": "2026-07-19",
+      "expected_delivery": "2026-07-30",
+      "actual_delivery": "2026-07-30",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1009",
+          "description": "Steel shelving unit",
+          "quantity": 20,
+          "unit_price": 310.0
+        },
+        {
+          "line": 2,
+          "sku": "SKU-1006",
+          "description": "LED panel light 60W",
+          "quantity": 10,
+          "unit_price": 64.2
+        },
+        {
+          "line": 3,
+          "sku": "SKU-1004",
+          "description": "Safety gloves (pack of 12)",
+          "quantity": 10,
+          "unit_price": 32.75
+        }
+      ],
+      "total": 7169.5
+    },
+    {
+      "po_number": "450013",
+      "supplier_id": "S1006",
+      "status": "Received",
+      "currency": "CAD",
+      "created_date": "2026-07-22",
+      "expected_delivery": "2026-08-04",
+      "actual_delivery": "2026-08-04",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1004",
+          "description": "Safety gloves (pack of 12)",
+          "quantity": 50,
+          "unit_price": 32.75
+        }
+      ],
+      "total": 1637.5
+    },
+    {
+      "po_number": "450014",
+      "supplier_id": "S1006",
+      "status": "Received",
+      "currency": "CAD",
+      "created_date": "2026-06-28",
+      "expected_delivery": "2026-07-17",
+      "actual_delivery": "2026-07-17",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1007",
+          "description": "Ergonomic office chair",
+          "quantity": 100,
+          "unit_price": 245.0
+        },
+        {
+          "line": 2,
+          "sku": "SKU-1008",
+          "description": "Barcode scanner (wireless)",
+          "quantity": 20,
+          "unit_price": 129.0
+        }
+      ],
+      "total": 27080.0
+    },
+    {
+      "po_number": "450015",
+      "supplier_id": "S1005",
+      "status": "Received",
+      "currency": "CAD",
+      "created_date": "2026-06-18",
+      "expected_delivery": "2026-06-30",
+      "actual_delivery": "2026-06-30",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1009",
+          "description": "Steel shelving unit",
+          "quantity": 50,
+          "unit_price": 310.0
+        },
+        {
+          "line": 2,
+          "sku": "SKU-1005",
+          "description": "Corrugated shipping box 18x12x10",
+          "quantity": 100,
+          "unit_price": 1.85
+        },
+        {
+          "line": 3,
+          "sku": "SKU-1010",
+          "description": "Printer toner cartridge",
+          "quantity": 40,
+          "unit_price": 87.4
+        }
+      ],
+      "total": 19181.0
+    },
+    {
+      "po_number": "450016",
+      "supplier_id": "S1007",
+      "status": "Received",
+      "currency": "CAD",
+      "created_date": "2026-07-17",
+      "expected_delivery": "2026-07-29",
+      "actual_delivery": "2026-07-29",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1009",
+          "description": "Steel shelving unit",
+          "quantity": 40,
+          "unit_price": 310.0
+        }
+      ],
+      "total": 12400.0
+    },
+    {
+      "po_number": "450017",
+      "supplier_id": "S1002",
+      "status": "Received",
+      "currency": "CAD",
+      "created_date": "2026-09-05",
+      "expected_delivery": "2026-09-11",
+      "actual_delivery": "2026-09-11",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1003",
+          "description": "Laptop docking station",
+          "quantity": 100,
+          "unit_price": 189.0
+        }
+      ],
+      "total": 18900.0
+    },
+    {
+      "po_number": "450018",
+      "supplier_id": "S1003",
+      "status": "Received",
+      "currency": "CAD",
+      "created_date": "2026-09-10",
+      "expected_delivery": "2026-10-01",
+      "actual_delivery": "2026-10-01",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1010",
+          "description": "Printer toner cartridge",
+          "quantity": 10,
+          "unit_price": 87.4
+        },
+        {
+          "line": 2,
+          "sku": "SKU-1007",
+          "description": "Ergonomic office chair",
+          "quantity": 40,
+          "unit_price": 245.0
+        }
+      ],
+      "total": 10674.0
+    },
+    {
+      "po_number": "450019",
+      "supplier_id": "S1008",
+      "status": "Received",
+      "currency": "CAD",
+      "created_date": "2026-08-07",
+      "expected_delivery": "2026-08-20",
+      "actual_delivery": "2026-08-20",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1001",
+          "description": "Hex bolt M10 (box of 100)",
+          "quantity": 100,
+          "unit_price": 18.5
+        },
+        {
+          "line": 2,
+          "sku": "SKU-1002",
+          "description": "Industrial pallet wrap 20in",
+          "quantity": 100,
+          "unit_price": 24.0
+        },
+        {
+          "line": 3,
+          "sku": "SKU-1009",
+          "description": "Steel shelving unit",
+          "quantity": 25,
+          "unit_price": 310.0
+        }
+      ],
+      "total": 12000.0
+    },
+    {
+      "po_number": "450020",
+      "supplier_id": "S1006",
+      "status": "Received",
+      "currency": "CAD",
+      "created_date": "2026-06-15",
+      "expected_delivery": "2026-06-26",
+      "actual_delivery": "2026-06-26",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1003",
+          "description": "Laptop docking station",
+          "quantity": 40,
+          "unit_price": 189.0
+        },
+        {
+          "line": 2,
+          "sku": "SKU-1001",
+          "description": "Hex bolt M10 (box of 100)",
+          "quantity": 100,
+          "unit_price": 18.5
+        }
+      ],
+      "total": 9410.0
+    },
+    {
+      "po_number": "450021",
+      "supplier_id": "S1005",
+      "status": "Received",
+      "currency": "CAD",
+      "created_date": "2026-08-04",
+      "expected_delivery": "2026-08-13",
+      "actual_delivery": "2026-08-13",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1002",
+          "description": "Industrial pallet wrap 20in",
+          "quantity": 100,
+          "unit_price": 24.0
+        },
+        {
+          "line": 2,
+          "sku": "SKU-1005",
+          "description": "Corrugated shipping box 18x12x10",
+          "quantity": 100,
+          "unit_price": 1.85
+        },
+        {
+          "line": 3,
+          "sku": "SKU-1009",
+          "description": "Steel shelving unit",
+          "quantity": 50,
+          "unit_price": 310.0
+        }
+      ],
+      "total": 18085.0
+    },
+    {
+      "po_number": "450022",
+      "supplier_id": "S1004",
+      "status": "Received",
+      "currency": "CAD",
+      "created_date": "2026-06-20",
+      "expected_delivery": "2026-07-03",
+      "actual_delivery": "2026-07-03",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1009",
+          "description": "Steel shelving unit",
+          "quantity": 50,
+          "unit_price": 310.0
+        }
+      ],
+      "total": 15500.0
+    },
+    {
+      "po_number": "450023",
+      "supplier_id": "S1001",
+      "status": "Received",
+      "currency": "CAD",
+      "created_date": "2026-08-16",
+      "expected_delivery": "2026-08-28",
+      "actual_delivery": "2026-08-28",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1001",
+          "description": "Hex bolt M10 (box of 100)",
+          "quantity": 10,
+          "unit_price": 18.5
+        },
+        {
+          "line": 2,
+          "sku": "SKU-1006",
+          "description": "LED panel light 60W",
+          "quantity": 25,
+          "unit_price": 64.2
+        }
+      ],
+      "total": 1790.0
+    },
+    {
+      "po_number": "450024",
+      "supplier_id": "S1004",
+      "status": "Received",
+      "currency": "CAD",
+      "created_date": "2026-06-08",
+      "expected_delivery": "2026-06-18",
+      "actual_delivery": "2026-06-18",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1002",
+          "description": "Industrial pallet wrap 20in",
+          "quantity": 10,
+          "unit_price": 24.0
+        },
+        {
+          "line": 2,
+          "sku": "SKU-1008",
+          "description": "Barcode scanner (wireless)",
+          "quantity": 10,
+          "unit_price": 129.0
+        },
+        {
+          "line": 3,
+          "sku": "SKU-1009",
+          "description": "Steel shelving unit",
+          "quantity": 20,
+          "unit_price": 310.0
+        }
+      ],
+      "total": 7730.0
+    },
+    {
+      "po_number": "450025",
+      "supplier_id": "S1003",
+      "status": "Received",
+      "currency": "CAD",
+      "created_date": "2026-08-24",
+      "expected_delivery": "2026-09-09",
+      "actual_delivery": "2026-09-09",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1003",
+          "description": "Laptop docking station",
+          "quantity": 25,
+          "unit_price": 189.0
+        },
+        {
+          "line": 2,
+          "sku": "SKU-1009",
+          "description": "Steel shelving unit",
+          "quantity": 50,
+          "unit_price": 310.0
+        },
+        {
+          "line": 3,
+          "sku": "SKU-1007",
+          "description": "Ergonomic office chair",
+          "quantity": 20,
+          "unit_price": 245.0
+        }
+      ],
+      "total": 25125.0
+    },
+    {
+      "po_number": "450026",
+      "supplier_id": "S1004",
+      "status": "Received",
+      "currency": "CAD",
+      "created_date": "2026-08-31",
+      "expected_delivery": "2026-09-11",
+      "actual_delivery": "2026-09-11",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1006",
+          "description": "LED panel light 60W",
+          "quantity": 40,
+          "unit_price": 64.2
+        },
+        {
+          "line": 2,
+          "sku": "SKU-1009",
+          "description": "Steel shelving unit",
+          "quantity": 40,
+          "unit_price": 310.0
+        }
+      ],
+      "total": 14968.0
+    },
+    {
+      "po_number": "450027",
+      "supplier_id": "S1002",
+      "status": "Received",
+      "currency": "CAD",
+      "created_date": "2026-07-02",
+      "expected_delivery": "2026-07-14",
+      "actual_delivery": "2026-07-14",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1006",
+          "description": "LED panel light 60W",
+          "quantity": 10,
+          "unit_price": 64.2
+        }
+      ],
+      "total": 642.0
+    },
+    {
+      "po_number": "450028",
+      "supplier_id": "S1004",
+      "status": "Received",
+      "currency": "CAD",
+      "created_date": "2026-08-15",
+      "expected_delivery": "2026-08-26",
+      "actual_delivery": "2026-08-26",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1002",
+          "description": "Industrial pallet wrap 20in",
+          "quantity": 100,
+          "unit_price": 24.0
+        }
+      ],
+      "total": 2400.0
+    },
+    {
+      "po_number": "450029",
+      "supplier_id": "S1001",
+      "status": "Received",
+      "currency": "CAD",
+      "created_date": "2026-06-30",
+      "expected_delivery": "2026-07-08",
+      "actual_delivery": "2026-07-08",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1006",
+          "description": "LED panel light 60W",
+          "quantity": 10,
+          "unit_price": 64.2
+        }
+      ],
+      "total": 642.0
+    },
+    {
+      "po_number": "450030",
+      "supplier_id": "S1004",
+      "status": "Received",
+      "currency": "CAD",
+      "created_date": "2026-07-06",
+      "expected_delivery": "2026-07-27",
+      "actual_delivery": "2026-07-27",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1004",
+          "description": "Safety gloves (pack of 12)",
+          "quantity": 50,
+          "unit_price": 32.75
+        },
+        {
+          "line": 2,
+          "sku": "SKU-1003",
+          "description": "Laptop docking station",
+          "quantity": 100,
+          "unit_price": 189.0
+        }
+      ],
+      "total": 20537.5
+    },
+    {
+      "po_number": "450031",
+      "supplier_id": "S1008",
+      "status": "Received",
+      "currency": "CAD",
+      "created_date": "2026-07-02",
+      "expected_delivery": "2026-07-20",
+      "actual_delivery": "2026-07-20",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1004",
+          "description": "Safety gloves (pack of 12)",
+          "quantity": 10,
+          "unit_price": 32.75
+        },
+        {
+          "line": 2,
+          "sku": "SKU-1002",
+          "description": "Industrial pallet wrap 20in",
+          "quantity": 100,
+          "unit_price": 24.0
+        }
+      ],
+      "total": 2727.5
+    },
+    {
+      "po_number": "450032",
+      "supplier_id": "S1007",
+      "status": "Received",
+      "currency": "CAD",
+      "created_date": "2026-07-16",
+      "expected_delivery": "2026-07-31",
+      "actual_delivery": "2026-07-31",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1008",
+          "description": "Barcode scanner (wireless)",
+          "quantity": 100,
+          "unit_price": 129.0
+        },
+        {
+          "line": 2,
+          "sku": "SKU-1001",
+          "description": "Hex bolt M10 (box of 100)",
+          "quantity": 100,
+          "unit_price": 18.5
+        }
+      ],
+      "total": 14750.0
+    },
+    {
+      "po_number": "450033",
+      "supplier_id": "S1002",
+      "status": "Received",
+      "currency": "CAD",
+      "created_date": "2026-06-08",
+      "expected_delivery": "2026-06-23",
+      "actual_delivery": "2026-06-23",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1006",
+          "description": "LED panel light 60W",
+          "quantity": 10,
+          "unit_price": 64.2
+        },
+        {
+          "line": 2,
+          "sku": "SKU-1004",
+          "description": "Safety gloves (pack of 12)",
+          "quantity": 20,
+          "unit_price": 32.75
+        },
+        {
+          "line": 3,
+          "sku": "SKU-1004",
+          "description": "Safety gloves (pack of 12)",
+          "quantity": 50,
+          "unit_price": 32.75
+        }
+      ],
+      "total": 2934.5
+    },
+    {
+      "po_number": "450034",
+      "supplier_id": "S1008",
+      "status": "Received",
+      "currency": "CAD",
+      "created_date": "2026-06-18",
+      "expected_delivery": "2026-07-03",
+      "actual_delivery": "2026-07-03",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1005",
+          "description": "Corrugated shipping box 18x12x10",
+          "quantity": 40,
+          "unit_price": 1.85
+        }
+      ],
+      "total": 74.0
+    },
+    {
+      "po_number": "450035",
+      "supplier_id": "S1004",
+      "status": "Received",
+      "currency": "CAD",
+      "created_date": "2026-09-20",
+      "expected_delivery": "2026-09-28",
+      "actual_delivery": "2026-09-28",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1009",
+          "description": "Steel shelving unit",
+          "quantity": 10,
+          "unit_price": 310.0
+        },
+        {
+          "line": 2,
+          "sku": "SKU-1001",
+          "description": "Hex bolt M10 (box of 100)",
+          "quantity": 100,
+          "unit_price": 18.5
+        }
+      ],
+      "total": 4950.0
+    },
+    {
+      "po_number": "450036",
+      "supplier_id": "S1001",
+      "status": "Received",
+      "currency": "CAD",
+      "created_date": "2026-06-12",
+      "expected_delivery": "2026-06-24",
+      "actual_delivery": "2026-06-24",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1007",
+          "description": "Ergonomic office chair",
+          "quantity": 40,
+          "unit_price": 245.0
+        }
+      ],
+      "total": 9800.0
+    },
+    {
+      "po_number": "450037",
+      "supplier_id": "S1008",
+      "status": "Received",
+      "currency": "CAD",
+      "created_date": "2026-06-28",
+      "expected_delivery": "2026-07-13",
+      "actual_delivery": "2026-07-13",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1003",
+          "description": "Laptop docking station",
+          "quantity": 40,
+          "unit_price": 189.0
+        }
+      ],
+      "total": 7560.0
+    },
+    {
+      "po_number": "450038",
+      "supplier_id": "S1001",
+      "status": "Received",
+      "currency": "CAD",
+      "created_date": "2026-07-20",
+      "expected_delivery": "2026-07-31",
+      "actual_delivery": "2026-07-31",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1005",
+          "description": "Corrugated shipping box 18x12x10",
+          "quantity": 40,
+          "unit_price": 1.85
+        },
+        {
+          "line": 2,
+          "sku": "SKU-1009",
+          "description": "Steel shelving unit",
+          "quantity": 100,
+          "unit_price": 310.0
+        }
+      ],
+      "total": 31074.0
+    },
+    {
+      "po_number": "450039",
+      "supplier_id": "S1008",
+      "status": "Received",
+      "currency": "CAD",
+      "created_date": "2026-06-20",
+      "expected_delivery": "2026-07-01",
+      "actual_delivery": "2026-07-01",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1004",
+          "description": "Safety gloves (pack of 12)",
+          "quantity": 10,
+          "unit_price": 32.75
+        },
+        {
+          "line": 2,
+          "sku": "SKU-1010",
+          "description": "Printer toner cartridge",
+          "quantity": 100,
+          "unit_price": 87.4
+        }
+      ],
+      "total": 9067.5
+    },
+    {
+      "po_number": "450040",
+      "supplier_id": "S1001",
+      "status": "Received",
+      "currency": "CAD",
+      "created_date": "2026-09-04",
+      "expected_delivery": "2026-09-18",
+      "actual_delivery": "2026-09-18",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1001",
+          "description": "Hex bolt M10 (box of 100)",
+          "quantity": 50,
+          "unit_price": 18.5
+        }
+      ],
+      "total": 925.0
+    },
+    {
+      "po_number": "450041",
+      "supplier_id": "S1008",
+      "status": "Received",
+      "currency": "CAD",
+      "created_date": "2026-08-04",
+      "expected_delivery": "2026-08-21",
+      "actual_delivery": "2026-08-21",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1001",
+          "description": "Hex bolt M10 (box of 100)",
+          "quantity": 50,
+          "unit_price": 18.5
+        }
+      ],
+      "total": 925.0
+    },
+    {
+      "po_number": "450042",
+      "supplier_id": "S1002",
+      "status": "Received",
+      "currency": "CAD",
+      "created_date": "2026-09-17",
+      "expected_delivery": "2026-09-28",
+      "actual_delivery": "2026-09-28",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1010",
+          "description": "Printer toner cartridge",
+          "quantity": 10,
+          "unit_price": 87.4
+        }
+      ],
+      "total": 874.0
+    },
+    {
+      "po_number": "450043",
+      "supplier_id": "S1004",
+      "status": "Received",
+      "currency": "CAD",
+      "created_date": "2026-07-22",
+      "expected_delivery": "2026-07-30",
+      "actual_delivery": "2026-07-30",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1004",
+          "description": "Safety gloves (pack of 12)",
+          "quantity": 50,
+          "unit_price": 32.75
+        },
+        {
+          "line": 2,
+          "sku": "SKU-1010",
+          "description": "Printer toner cartridge",
+          "quantity": 10,
+          "unit_price": 87.4
+        },
+        {
+          "line": 3,
+          "sku": "SKU-1010",
+          "description": "Printer toner cartridge",
+          "quantity": 10,
+          "unit_price": 87.4
+        }
+      ],
+      "total": 3385.5
+    },
+    {
+      "po_number": "450044",
+      "supplier_id": "S1007",
+      "status": "Open - awaiting invoice",
+      "currency": "CAD",
+      "created_date": "2026-08-24",
+      "expected_delivery": "2026-09-11",
+      "actual_delivery": "2026-09-11",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1009",
+          "description": "Steel shelving unit",
+          "quantity": 25,
+          "unit_price": 310.0
+        },
+        {
+          "line": 2,
+          "sku": "SKU-1005",
+          "description": "Corrugated shipping box 18x12x10",
+          "quantity": 20,
+          "unit_price": 1.85
+        },
+        {
+          "line": 3,
+          "sku": "SKU-1006",
+          "description": "LED panel light 60W",
+          "quantity": 20,
+          "unit_price": 64.2
+        }
+      ],
+      "total": 9071.0
+    },
+    {
+      "po_number": "450045",
+      "supplier_id": "S1005",
+      "status": "Received",
+      "currency": "CAD",
+      "created_date": "2026-07-21",
+      "expected_delivery": "2026-07-30",
+      "actual_delivery": "2026-07-30",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1005",
+          "description": "Corrugated shipping box 18x12x10",
+          "quantity": 40,
+          "unit_price": 1.85
+        },
+        {
+          "line": 2,
+          "sku": "SKU-1006",
+          "description": "LED panel light 60W",
+          "quantity": 10,
+          "unit_price": 64.2
+        },
+        {
+          "line": 3,
+          "sku": "SKU-1001",
+          "description": "Hex bolt M10 (box of 100)",
+          "quantity": 40,
+          "unit_price": 18.5
+        }
+      ],
+      "total": 1456.0
+    },
+    {
+      "po_number": "450046",
+      "supplier_id": "S1002",
+      "status": "Received",
+      "currency": "CAD",
+      "created_date": "2026-06-10",
+      "expected_delivery": "2026-06-29",
+      "actual_delivery": "2026-06-29",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1009",
+          "description": "Steel shelving unit",
+          "quantity": 25,
+          "unit_price": 310.0
+        }
+      ],
+      "total": 7750.0
+    },
+    {
+      "po_number": "450047",
+      "supplier_id": "S1003",
+      "status": "Received",
+      "currency": "CAD",
+      "created_date": "2026-09-28",
+      "expected_delivery": "2026-10-12",
+      "actual_delivery": "2026-10-12",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1004",
+          "description": "Safety gloves (pack of 12)",
+          "quantity": 25,
+          "unit_price": 32.75
+        }
+      ],
+      "total": 818.75
+    },
+    {
+      "po_number": "450048",
+      "supplier_id": "S1005",
+      "status": "Received",
+      "currency": "CAD",
+      "created_date": "2026-06-21",
+      "expected_delivery": "2026-07-07",
+      "actual_delivery": "2026-07-07",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1005",
+          "description": "Corrugated shipping box 18x12x10",
+          "quantity": 50,
+          "unit_price": 1.85
+        },
+        {
+          "line": 2,
+          "sku": "SKU-1009",
+          "description": "Steel shelving unit",
+          "quantity": 10,
+          "unit_price": 310.0
+        },
+        {
+          "line": 3,
+          "sku": "SKU-1009",
+          "description": "Steel shelving unit",
+          "quantity": 25,
+          "unit_price": 310.0
+        }
+      ],
+      "total": 10942.5
+    },
+    {
+      "po_number": "450049",
+      "supplier_id": "S1002",
+      "status": "Received",
+      "currency": "CAD",
+      "created_date": "2026-09-29",
+      "expected_delivery": "2026-10-08",
+      "actual_delivery": "2026-10-08",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1002",
+          "description": "Industrial pallet wrap 20in",
+          "quantity": 10,
+          "unit_price": 24.0
+        },
+        {
+          "line": 2,
+          "sku": "SKU-1009",
+          "description": "Steel shelving unit",
+          "quantity": 20,
+          "unit_price": 310.0
+        }
+      ],
+      "total": 6440.0
+    },
+    {
+      "po_number": "450050",
+      "supplier_id": "S1005",
+      "status": "Received",
+      "currency": "CAD",
+      "created_date": "2026-07-07",
+      "expected_delivery": "2026-07-27",
+      "actual_delivery": "2026-07-27",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1006",
+          "description": "LED panel light 60W",
+          "quantity": 20,
+          "unit_price": 64.2
+        }
+      ],
+      "total": 1284.0
+    }
+  ],
+  "invoices": [
+    {
+      "invoice_number": "INV-90001",
+      "po_number": "450001",
+      "supplier_id": "S1002",
+      "invoice_date": "2026-06-19",
+      "currency": "CAD",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1004",
+          "quantity": 20,
+          "unit_price": 32.75
+        }
+      ],
+      "total": 655.0
+    },
+    {
+      "invoice_number": "INV-90002",
+      "po_number": "450002",
+      "supplier_id": "S1002",
+      "invoice_date": "2026-09-16",
+      "currency": "CAD",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1010",
+          "quantity": 40,
+          "unit_price": 87.4
+        }
+      ],
+      "total": 3496.0
+    },
+    {
+      "invoice_number": "INV-90003",
+      "po_number": "450003",
+      "supplier_id": "S1001",
+      "invoice_date": "2026-06-14",
+      "currency": "CAD",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1004",
+          "quantity": 50,
+          "unit_price": 35.37
+        }
+      ],
+      "total": 1768.5
+    },
+    {
+      "invoice_number": "INV-90004",
+      "po_number": "450004",
+      "supplier_id": "S1001",
+      "invoice_date": "2026-08-23",
+      "currency": "CAD",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1009",
+          "quantity": 40,
+          "unit_price": 310.0
+        },
+        {
+          "line": 2,
+          "sku": "SKU-1004",
+          "quantity": 40,
+          "unit_price": 32.75
+        },
+        {
+          "line": 3,
+          "sku": "SKU-1010",
+          "quantity": 25,
+          "unit_price": 87.4
+        }
+      ],
+      "total": 15895.0
+    },
+    {
+      "invoice_number": "INV-90005",
+      "po_number": "450005",
+      "supplier_id": "S1001",
+      "invoice_date": "2026-09-17",
+      "currency": "CAD",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1007",
+          "quantity": 25,
+          "unit_price": 245.0
+        },
+        {
+          "line": 2,
+          "sku": "SKU-1005",
+          "quantity": 20,
+          "unit_price": 1.85
+        },
+        {
+          "line": 3,
+          "sku": "SKU-1004",
+          "quantity": 25,
+          "unit_price": 32.75
+        }
+      ],
+      "total": 6980.75
+    },
+    {
+      "invoice_number": "INV-90006",
+      "po_number": "450006",
+      "supplier_id": "S1002",
+      "invoice_date": "2026-07-01",
+      "currency": "CAD",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1006",
+          "quantity": 25,
+          "unit_price": 64.2
+        }
+      ],
+      "total": 1605.0
+    },
+    {
+      "invoice_number": "INV-90007",
+      "po_number": "450007",
+      "supplier_id": "S1005",
+      "invoice_date": "2026-09-30",
+      "currency": "CAD",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1008",
+          "quantity": 50,
+          "unit_price": 129.0
+        },
+        {
+          "line": 2,
+          "sku": "SKU-1002",
+          "quantity": 40,
+          "unit_price": 24.0
+        },
+        {
+          "line": 3,
+          "sku": "SKU-1002",
+          "quantity": 50,
+          "unit_price": 24.0
+        }
+      ],
+      "total": 8610.0
+    },
+    {
+      "invoice_number": "INV-90008",
+      "po_number": "450008",
+      "supplier_id": "S1005",
+      "invoice_date": "2026-10-08",
+      "currency": "CAD",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1006",
+          "quantity": 50,
+          "unit_price": 64.2
+        },
+        {
+          "line": 2,
+          "sku": "SKU-1004",
+          "quantity": 100,
+          "unit_price": 32.75
+        },
+        {
+          "line": 3,
+          "sku": "SKU-1002",
+          "quantity": 10,
+          "unit_price": 24.0
+        }
+      ],
+      "total": 6725.0
+    },
+    {
+      "invoice_number": "INV-90009",
+      "po_number": "450009",
+      "supplier_id": "S1004",
+      "invoice_date": "2026-09-20",
+      "currency": "CAD",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1004",
+          "quantity": 10,
+          "unit_price": 32.75
+        }
+      ],
+      "total": 327.5
+    },
+    {
+      "invoice_number": "INV-90010",
+      "po_number": "450010",
+      "supplier_id": "S1007",
+      "invoice_date": "2026-07-24",
+      "currency": "CAD",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1006",
+          "quantity": 20,
+          "unit_price": 64.2
+        },
+        {
+          "line": 2,
+          "sku": "SKU-1006",
+          "quantity": 25,
+          "unit_price": 64.2
+        },
+        {
+          "line": 3,
+          "sku": "SKU-1004",
+          "quantity": 100,
+          "unit_price": 32.75
+        }
+      ],
+      "total": 6164.0
+    },
+    {
+      "invoice_number": "INV-90011",
+      "po_number": "450011",
+      "supplier_id": "S1005",
+      "invoice_date": "2026-09-20",
+      "currency": "CAD",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1002",
+          "quantity": 50,
+          "unit_price": 24.0
+        },
+        {
+          "line": 2,
+          "sku": "SKU-1003",
+          "quantity": 50,
+          "unit_price": 189.0
+        },
+        {
+          "line": 3,
+          "sku": "SKU-1004",
+          "quantity": 20,
+          "unit_price": 32.75
+        }
+      ],
+      "total": 11305.0
+    },
+    {
+      "invoice_number": "INV-90012",
+      "po_number": "450012",
+      "supplier_id": "S1008",
+      "invoice_date": "2026-08-01",
+      "currency": "CAD",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1009",
+          "quantity": 16,
+          "unit_price": 347.2
+        },
+        {
+          "line": 2,
+          "sku": "SKU-1006",
+          "quantity": 10,
+          "unit_price": 64.2
+        },
+        {
+          "line": 3,
+          "sku": "SKU-1004",
+          "quantity": 10,
+          "unit_price": 32.75
+        }
+      ],
+      "total": 6524.7
+    },
+    {
+      "invoice_number": "INV-90013",
+      "po_number": "450013",
+      "supplier_id": "S1006",
+      "invoice_date": "2026-08-06",
+      "currency": "CAD",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1004",
+          "quantity": 50,
+          "unit_price": 32.75
+        }
+      ],
+      "total": 1637.5
+    },
+    {
+      "invoice_number": "INV-90014",
+      "po_number": "450014",
+      "supplier_id": "S1006",
+      "invoice_date": "2026-07-19",
+      "currency": "CAD",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1007",
+          "quantity": 100,
+          "unit_price": 245.0
+        },
+        {
+          "line": 2,
+          "sku": "SKU-1008",
+          "quantity": 20,
+          "unit_price": 129.0
+        }
+      ],
+      "total": 27080.0
+    },
+    {
+      "invoice_number": "INV-90015",
+      "po_number": "450015",
+      "supplier_id": "S1005",
+      "invoice_date": "2026-07-02",
+      "currency": "CAD",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1009",
+          "quantity": 50,
+          "unit_price": 334.8
+        },
+        {
+          "line": 2,
+          "sku": "SKU-1005",
+          "quantity": 100,
+          "unit_price": 1.85
+        },
+        {
+          "line": 3,
+          "sku": "SKU-1010",
+          "quantity": 40,
+          "unit_price": 87.4
+        }
+      ],
+      "total": 20421.0
+    },
+    {
+      "invoice_number": "INV-90016",
+      "po_number": "450016",
+      "supplier_id": "S1007",
+      "invoice_date": "2026-07-31",
+      "currency": "CAD",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1009",
+          "quantity": 40,
+          "unit_price": 310.0
+        }
+      ],
+      "total": 12400.0
+    },
+    {
+      "invoice_number": "INV-90017",
+      "po_number": "450017",
+      "supplier_id": "S1002",
+      "invoice_date": "2026-09-13",
+      "currency": "CAD",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1003",
+          "quantity": 100,
+          "unit_price": 189.0
+        }
+      ],
+      "total": 18900.0
+    },
+    {
+      "invoice_number": "INV-90018",
+      "po_number": "450018",
+      "supplier_id": "S1003",
+      "invoice_date": "2026-10-03",
+      "currency": "CAD",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1010",
+          "quantity": 8,
+          "unit_price": 87.4
+        },
+        {
+          "line": 2,
+          "sku": "SKU-1007",
+          "quantity": 40,
+          "unit_price": 245.0
+        }
+      ],
+      "total": 10499.2
+    },
+    {
+      "invoice_number": "INV-90019",
+      "po_number": "450019",
+      "supplier_id": "S1008",
+      "invoice_date": "2026-08-22",
+      "currency": "CAD",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1001",
+          "quantity": 100,
+          "unit_price": 18.5
+        },
+        {
+          "line": 2,
+          "sku": "SKU-1002",
+          "quantity": 100,
+          "unit_price": 24.0
+        },
+        {
+          "line": 3,
+          "sku": "SKU-1009",
+          "quantity": 25,
+          "unit_price": 310.0
+        }
+      ],
+      "total": 12000.0
+    },
+    {
+      "invoice_number": "INV-90020",
+      "po_number": "450020",
+      "supplier_id": "S1006",
+      "invoice_date": "2026-06-28",
+      "currency": "CAD",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1003",
+          "quantity": 40,
+          "unit_price": 189.0
+        },
+        {
+          "line": 2,
+          "sku": "SKU-1001",
+          "quantity": 100,
+          "unit_price": 18.5
+        }
+      ],
+      "total": 9410.0
+    },
+    {
+      "invoice_number": "INV-90021",
+      "po_number": "450021",
+      "supplier_id": "S1005",
+      "invoice_date": "2026-08-15",
+      "currency": "CAD",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1002",
+          "quantity": 100,
+          "unit_price": 24.0
+        },
+        {
+          "line": 2,
+          "sku": "SKU-1005",
+          "quantity": 100,
+          "unit_price": 1.85
+        },
+        {
+          "line": 3,
+          "sku": "SKU-1009",
+          "quantity": 50,
+          "unit_price": 310.0
+        }
+      ],
+      "total": 18085.0
+    },
+    {
+      "invoice_number": "INV-90022",
+      "po_number": "450021",
+      "supplier_id": "S1005",
+      "invoice_date": "2026-08-20",
+      "currency": "CAD",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1002",
+          "quantity": 100,
+          "unit_price": 24.0
+        },
+        {
+          "line": 2,
+          "sku": "SKU-1005",
+          "quantity": 100,
+          "unit_price": 1.85
+        },
+        {
+          "line": 3,
+          "sku": "SKU-1009",
+          "quantity": 50,
+          "unit_price": 310.0
+        }
+      ],
+      "total": 18085.0
+    },
+    {
+      "invoice_number": "INV-90023",
+      "po_number": "450022",
+      "supplier_id": "S1004",
+      "invoice_date": "2026-07-05",
+      "currency": "CAD",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1009",
+          "quantity": 50,
+          "unit_price": 310.0
+        }
+      ],
+      "total": 15500.0
+    },
+    {
+      "invoice_number": "INV-90024",
+      "po_number": "450023",
+      "supplier_id": "S1001",
+      "invoice_date": "2026-08-30",
+      "currency": "CAD",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1001",
+          "quantity": 10,
+          "unit_price": 18.5
+        },
+        {
+          "line": 2,
+          "sku": "SKU-1006",
+          "quantity": 25,
+          "unit_price": 64.2
+        }
+      ],
+      "total": 1790.0
+    },
+    {
+      "invoice_number": "INV-90025",
+      "po_number": "450024",
+      "supplier_id": "S1004",
+      "invoice_date": "2026-06-20",
+      "currency": "CAD",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1002",
+          "quantity": 10,
+          "unit_price": 24.0
+        },
+        {
+          "line": 2,
+          "sku": "SKU-1008",
+          "quantity": 10,
+          "unit_price": 129.0
+        },
+        {
+          "line": 3,
+          "sku": "SKU-1009",
+          "quantity": 20,
+          "unit_price": 310.0
+        }
+      ],
+      "total": 7730.0
+    },
+    {
+      "invoice_number": "INV-90026",
+      "po_number": "450025",
+      "supplier_id": "S1003",
+      "invoice_date": "2026-09-11",
+      "currency": "CAD",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1003",
+          "quantity": 25,
+          "unit_price": 189.0
+        },
+        {
+          "line": 2,
+          "sku": "SKU-1009",
+          "quantity": 50,
+          "unit_price": 310.0
+        },
+        {
+          "line": 3,
+          "sku": "SKU-1007",
+          "quantity": 20,
+          "unit_price": 245.0
+        }
+      ],
+      "total": 25125.0
+    },
+    {
+      "invoice_number": "INV-90027",
+      "po_number": "450026",
+      "supplier_id": "S1004",
+      "invoice_date": "2026-09-13",
+      "currency": "CAD",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1006",
+          "quantity": 40,
+          "unit_price": 64.2
+        },
+        {
+          "line": 2,
+          "sku": "SKU-1009",
+          "quantity": 40,
+          "unit_price": 310.0
+        }
+      ],
+      "total": 14968.0
+    },
+    {
+      "invoice_number": "INV-90028",
+      "po_number": "450027",
+      "supplier_id": "S1002",
+      "invoice_date": "2026-07-16",
+      "currency": "CAD",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1006",
+          "quantity": 8,
+          "unit_price": 64.2
+        }
+      ],
+      "total": 513.6
+    },
+    {
+      "invoice_number": "INV-90029",
+      "po_number": "450028",
+      "supplier_id": "S1004",
+      "invoice_date": "2026-08-28",
+      "currency": "CAD",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1002",
+          "quantity": 100,
+          "unit_price": 24.0
+        }
+      ],
+      "total": 2400.0
+    },
+    {
+      "invoice_number": "INV-90030",
+      "po_number": "450029",
+      "supplier_id": "S1001",
+      "invoice_date": "2026-07-10",
+      "currency": "CAD",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1006",
+          "quantity": 10,
+          "unit_price": 64.2
+        }
+      ],
+      "total": 642.0
+    },
+    {
+      "invoice_number": "INV-90031",
+      "po_number": "450030",
+      "supplier_id": "S1004",
+      "invoice_date": "2026-07-29",
+      "currency": "CAD",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1004",
+          "quantity": 50,
+          "unit_price": 33.08
+        },
+        {
+          "line": 2,
+          "sku": "SKU-1003",
+          "quantity": 100,
+          "unit_price": 189.0
+        }
+      ],
+      "total": 20554.0
+    },
+    {
+      "invoice_number": "INV-90032",
+      "po_number": "450031",
+      "supplier_id": "S1008",
+      "invoice_date": "2026-07-22",
+      "currency": "CAD",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1004",
+          "quantity": 10,
+          "unit_price": 32.75
+        },
+        {
+          "line": 2,
+          "sku": "SKU-1002",
+          "quantity": 100,
+          "unit_price": 24.0
+        }
+      ],
+      "total": 2727.5
+    },
+    {
+      "invoice_number": "INV-90033",
+      "po_number": "450032",
+      "supplier_id": "S1007",
+      "invoice_date": "2026-08-02",
+      "currency": "CAD",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1008",
+          "quantity": 100,
+          "unit_price": 129.0
+        },
+        {
+          "line": 2,
+          "sku": "SKU-1001",
+          "quantity": 100,
+          "unit_price": 18.5
+        }
+      ],
+      "total": 14750.0
+    },
+    {
+      "invoice_number": "INV-90034",
+      "po_number": "450033",
+      "supplier_id": "S1002",
+      "invoice_date": "2026-06-25",
+      "currency": "CAD",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1006",
+          "quantity": 10,
+          "unit_price": 69.34
+        },
+        {
+          "line": 2,
+          "sku": "SKU-1004",
+          "quantity": 20,
+          "unit_price": 32.75
+        },
+        {
+          "line": 3,
+          "sku": "SKU-1004",
+          "quantity": 50,
+          "unit_price": 32.75
+        }
+      ],
+      "total": 2985.9
+    },
+    {
+      "invoice_number": "INV-90035",
+      "po_number": "450034",
+      "supplier_id": "S1008",
+      "invoice_date": "2026-07-05",
+      "currency": "CAD",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1005",
+          "quantity": 40,
+          "unit_price": 1.85
+        }
+      ],
+      "total": 74.0
+    },
+    {
+      "invoice_number": "INV-90036",
+      "po_number": "450035",
+      "supplier_id": "S1004",
+      "invoice_date": "2026-09-30",
+      "currency": "CAD",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1009",
+          "quantity": 10,
+          "unit_price": 310.0
+        },
+        {
+          "line": 2,
+          "sku": "SKU-1001",
+          "quantity": 100,
+          "unit_price": 18.5
+        }
+      ],
+      "total": 4950.0
+    },
+    {
+      "invoice_number": "INV-90037",
+      "po_number": "450036",
+      "supplier_id": "S1001",
+      "invoice_date": "2026-06-26",
+      "currency": "CAD",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1007",
+          "quantity": 40,
+          "unit_price": 245.0
+        }
+      ],
+      "total": 9800.0
+    },
+    {
+      "invoice_number": "INV-90038",
+      "po_number": "450037",
+      "supplier_id": "S1008",
+      "invoice_date": "2026-07-15",
+      "currency": "CAD",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1003",
+          "quantity": 40,
+          "unit_price": 189.0
+        }
+      ],
+      "total": 7560.0
+    },
+    {
+      "invoice_number": "INV-90039",
+      "po_number": "450038",
+      "supplier_id": "S1001",
+      "invoice_date": "2026-08-02",
+      "currency": "CAD",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1005",
+          "quantity": 40,
+          "unit_price": 1.85
+        },
+        {
+          "line": 2,
+          "sku": "SKU-1009",
+          "quantity": 100,
+          "unit_price": 310.0
+        }
+      ],
+      "total": 31074.0
+    },
+    {
+      "invoice_number": "INV-90040",
+      "po_number": "450039",
+      "supplier_id": "S1008",
+      "invoice_date": "2026-07-03",
+      "currency": "CAD",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1004",
+          "quantity": 10,
+          "unit_price": 32.75
+        },
+        {
+          "line": 2,
+          "sku": "SKU-1010",
+          "quantity": 100,
+          "unit_price": 87.4
+        }
+      ],
+      "total": 9067.5
+    },
+    {
+      "invoice_number": "INV-90041",
+      "po_number": "450040",
+      "supplier_id": "S1001",
+      "invoice_date": "2026-09-20",
+      "currency": "CAD",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1001",
+          "quantity": 50,
+          "unit_price": 19.98
+        }
+      ],
+      "total": 999.0
+    },
+    {
+      "invoice_number": "INV-90042",
+      "po_number": "450041",
+      "supplier_id": "S1008",
+      "invoice_date": "2026-08-23",
+      "currency": "CAD",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1001",
+          "quantity": 50,
+          "unit_price": 18.5
+        }
+      ],
+      "total": 925.0
+    },
+    {
+      "invoice_number": "INV-90043",
+      "po_number": "450042",
+      "supplier_id": "S1002",
+      "invoice_date": "2026-09-30",
+      "currency": "CAD",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1010",
+          "quantity": 10,
+          "unit_price": 87.4
+        }
+      ],
+      "total": 874.0
+    },
+    {
+      "invoice_number": "INV-90044",
+      "po_number": "450043",
+      "supplier_id": "S1004",
+      "invoice_date": "2026-08-01",
+      "currency": "CAD",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1004",
+          "quantity": 50,
+          "unit_price": 32.75
+        },
+        {
+          "line": 2,
+          "sku": "SKU-1010",
+          "quantity": 10,
+          "unit_price": 87.4
+        },
+        {
+          "line": 3,
+          "sku": "SKU-1010",
+          "quantity": 10,
+          "unit_price": 87.4
+        }
+      ],
+      "total": 3385.5
+    },
+    {
+      "invoice_number": "INV-90045",
+      "po_number": "450045",
+      "supplier_id": "S1005",
+      "invoice_date": "2026-08-01",
+      "currency": "CAD",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1005",
+          "quantity": 40,
+          "unit_price": 1.85
+        },
+        {
+          "line": 2,
+          "sku": "SKU-1006",
+          "quantity": 10,
+          "unit_price": 64.2
+        },
+        {
+          "line": 3,
+          "sku": "SKU-1001",
+          "quantity": 40,
+          "unit_price": 18.5
+        }
+      ],
+      "total": 1456.0
+    },
+    {
+      "invoice_number": "INV-90046",
+      "po_number": "450046",
+      "supplier_id": "S1002",
+      "invoice_date": "2026-07-01",
+      "currency": "CAD",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1009",
+          "quantity": 25,
+          "unit_price": 310.0
+        }
+      ],
+      "total": 7750.0
+    },
+    {
+      "invoice_number": "INV-90047",
+      "po_number": "450047",
+      "supplier_id": "S1003",
+      "invoice_date": "2026-10-14",
+      "currency": "CAD",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1004",
+          "quantity": 25,
+          "unit_price": 32.75
+        }
+      ],
+      "total": 818.75
+    },
+    {
+      "invoice_number": "INV-90048",
+      "po_number": "450048",
+      "supplier_id": "S1005",
+      "invoice_date": "2026-07-09",
+      "currency": "CAD",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1005",
+          "quantity": 50,
+          "unit_price": 1.85
+        },
+        {
+          "line": 2,
+          "sku": "SKU-1009",
+          "quantity": 10,
+          "unit_price": 310.0
+        },
+        {
+          "line": 3,
+          "sku": "SKU-1009",
+          "quantity": 25,
+          "unit_price": 310.0
+        }
+      ],
+      "total": 10942.5
+    },
+    {
+      "invoice_number": "INV-90049",
+      "po_number": "450049",
+      "supplier_id": "S1002",
+      "invoice_date": "2026-10-10",
+      "currency": "CAD",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1002",
+          "quantity": 10,
+          "unit_price": 24.0
+        },
+        {
+          "line": 2,
+          "sku": "SKU-1009",
+          "quantity": 20,
+          "unit_price": 310.0
+        }
+      ],
+      "total": 6440.0
+    },
+    {
+      "invoice_number": "INV-90050",
+      "po_number": "450050",
+      "supplier_id": "S1005",
+      "invoice_date": "2026-07-29",
+      "currency": "CAD",
+      "lines": [
+        {
+          "line": 1,
+          "sku": "SKU-1006",
+          "quantity": 20,
+          "unit_price": 64.2
+        }
+      ],
+      "total": 1284.0
+    }
+  ]
+}

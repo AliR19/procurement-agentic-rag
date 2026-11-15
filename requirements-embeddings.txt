@@ -1,0 +1,2 @@
+# Optional: real semantic embeddings (downloads a model on first run; pulls in PyTorch).
+sentence-transformers>=3.0

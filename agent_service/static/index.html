@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Procurement Assistant</title>
+<style>
+  :root { --bg:#f6f7f9; --card:#fff; --ink:#1b2430; --muted:#5d6b7c; --line:#dde2e9; --accent:#1f4e96; --warn:#b45309; --ok:#0f7a3d; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#12161c; --card:#1a2029; --ink:#e7ecf2; --muted:#9aa7b6; --line:#2b3441; --accent:#6ea0ec; --warn:#f0a35a; --ok:#58c98b; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; font:15px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif; background:var(--bg); color:var(--ink); }
+  header { padding:14px 20px; border-bottom:1px solid var(--line); background:var(--card); display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
+  header h1 { font-size:17px; margin:0; }
+  .badge { font-size:12px; padding:2px 8px; border:1px solid var(--line); border-radius:999px; color:var(--muted); }
+  main { display:grid; grid-template-columns: minmax(0,1fr) 340px; gap:16px; max-width:1200px; margin:16px auto; padding:0 16px; }
+  @media (max-width: 860px) { main { grid-template-columns:1fr; } }
+  .panel { min-width:0; background:var(--card); border:1px solid var(--line); border-radius:10px; padding:14px; }
+  #log { min-height:360px; max-height:62vh; overflow:auto; display:flex; flex-direction:column; gap:10px; }
+  .msg { padding:10px 12px; border-radius:10px; max-width:92%; white-space:pre-wrap; word-wrap:break-word; }
+  .user { align-self:flex-end; background:var(--accent); color:#fff; }
+  .bot { align-self:flex-start; background:var(--bg); border:1px solid var(--line); }
+  form { display:flex; gap:8px; margin-top:12px; }
+  input[type=text] { flex:1; padding:10px 12px; border:1px solid var(--line); border-radius:8px; background:var(--bg); color:var(--ink); font:inherit; }
+  button { padding:9px 14px; border-radius:8px; border:1px solid var(--accent); background:var(--accent); color:#fff; font:inherit; cursor:pointer; }
+  button.secondary { background:transparent; color:var(--accent); }
+  button:disabled { opacity:.5; cursor:not-allowed; }
+  .approval { border:1px solid var(--warn); border-radius:10px; padding:12px; margin-top:12px; }
+  .approval h3 { margin:0 0 6px; font-size:14px; color:var(--warn); }
+  .approval pre { margin:6px 0 10px; max-height:160px; overflow:auto; font-size:12px; background:var(--bg); padding:8px; border-radius:6px; }
+  .approval .row { display:flex; gap:8px; }
+  h2 { font-size:14px; margin:0 0 8px; }
+  .chip { display:block; width:100%; text-align:left; margin-bottom:6px; font-size:13px; padding:7px 9px; background:transparent; color:var(--ink); border:1px solid var(--line); }
+  .trace { font-size:12px; border-top:1px solid var(--line); padding-top:6px; margin-top:6px; }
+  .trace b { color:var(--accent); }
+  .trace code { color:var(--muted); word-break:break-all; }
+  .note { color:var(--muted); font-size:12px; margin-top:10px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Procurement Assistant</h1>
+  <span class="badge" id="model">model: ...</span>
+  <span class="badge">simulated data</span>
+</header>
+<main>
+  <section class="panel">
+    <div id="log" aria-live="polite"></div>
+    <div id="approval"></div>
+    <form id="form">
+      <input id="input" type="text" placeholder="Ask about a PO, an invoice or a policy..." autocomplete="off" maxlength="2000">
+      <button id="send" type="submit">Send</button>
+    </form>
+  </section>
+  <aside class="panel">
+    <h2>Try these</h2>
+    <button class="chip secondary" data-q="Can you check the status of purchase order 450012, compare it with the supplier invoice, and tell me whether there are any discrepancies?">Check PO 450012 for discrepancies</button>
+    <button class="chip secondary" data-q="Check PO 450007 against its invoice">PO 450007 (late delivery)</button>
+    <button class="chip secondary" data-q="Check PO 450021 against its invoice">PO 450021 (duplicate invoice)</button>
+    <button class="chip secondary" data-q="Check PO 450001 against its invoice">PO 450001 (clean match)</button>
+    <button class="chip secondary" data-q="Who has to approve a discrepancy over CAD 5000?">Who approves a CAD 5000 discrepancy?</button>
+    <h2 style="margin-top:14px">Agent activity</h2>
+    <div id="trace"><span class="note">Tool calls appear here.</span></div>
+    <p class="note">All purchase orders, invoices and suppliers are simulated. Filing an exception report writes to the demo ERP only after you approve it.</p>
+  </aside>
+</main>
+<script>
+const threadId = (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()));
+const logEl = document.getElementById('log'), approvalEl = document.getElementById('approval');
+const traceEl = document.getElementById('trace'), input = document.getElementById('input'), sendBtn = document.getElementById('send');
+
+function add(role, text) {
+  const d = document.createElement('div');
+  d.className = 'msg ' + (role === 'user' ? 'user' : 'bot');
+  d.textContent = text;
+  logEl.appendChild(d); logEl.scrollTop = logEl.scrollHeight;
+}
+function busy(b) { sendBtn.disabled = b; input.disabled = b; }
+
+function render(data) {
+  document.getElementById('model').textContent = 'model: ' + data.model;
+  if (data.reply) add('bot', data.reply.replace(/\*\*/g, ''));
+  traceEl.innerHTML = '';
+  (data.tool_trace || []).forEach(t => {
+    const d = document.createElement('div'); d.className = 'trace';
+    const b = document.createElement('b'); b.textContent = t.tool;
+    const c = document.createElement('code'); c.textContent = ' ' + JSON.stringify(t.args);
+    d.append(b, c); traceEl.appendChild(d);
+  });
+  approvalEl.innerHTML = '';
+  if (data.pending_approval) {
+    const p = data.pending_approval;
+    const box = document.createElement('div'); box.className = 'approval';
+    const h = document.createElement('h3'); h.textContent = 'Approval required: ' + p.tool;
+    const pre = document.createElement('pre'); pre.textContent = JSON.stringify(p.args, null, 2);
+    const row = document.createElement('div'); row.className = 'row';
+    const yes = document.createElement('button'); yes.textContent = 'Approve and file';
+    const no = document.createElement('button'); no.className = 'secondary'; no.textContent = 'Reject';
+    yes.onclick = () => decide(true); no.onclick = () => decide(false);
+    row.append(yes, no); box.append(h, pre, row); approvalEl.appendChild(box);
+  }
+}
+
+async function call(path, body) {
+  busy(true);
+  try {
+    const r = await fetch(path, {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body)});
+    const data = await r.json();
+    if (!r.ok) throw new Error(data.detail || r.statusText);
+    render(data);
+  } catch (e) { add('bot', 'Error: ' + e.message); }
+  finally { busy(false); input.focus(); }
+}
+function decide(approved) { approvalEl.innerHTML = ''; call('/approve', {thread_id: threadId, approved}); }
+
+document.getElementById('form').addEventListener('submit', e => {
+  e.preventDefault();
+  const q = input.value.trim(); if (!q) return;
+  input.value = ''; add('user', q); call('/chat', {thread_id: threadId, message: q});
+});
+document.querySelectorAll('.chip').forEach(b => b.addEventListener('click', () => {
+  add('user', b.dataset.q); call('/chat', {thread_id: threadId, message: b.dataset.q});
+}));
+fetch('/health').then(r => r.json()).then(d => document.getElementById('model').textContent = 'model: ' + d.model).catch(() => {});
+</script>
+</body>
+</html>
