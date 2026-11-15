@@ -1,0 +1,186 @@
+name: docker-and-real-llm
+
+# Manual run (Actions tab -> "docker-and-real-llm" -> Run workflow).
+#   1. docker:   builds the Docker image, starts both containers with docker compose and
+#                exercises the whole flow over HTTP (demo mode, no model needed).
+#   2. real-llm: starts Ollama, pulls a tool-calling model and runs the same questions on it.
+#                CPU only, so it is slow (about 10-30 minutes). Results are written to the run summary.
+on:
+  workflow_dispatch:
+    inputs:
+      model:
+        description: "Ollama model for the real-LLM job (must support tool calling)"
+        default: "llama3.1"
+        required: false
+      run_llm:
+        description: "Also run the real-LLM job (slow, CPU only)"
+        type: boolean
+        default: true
+
+jobs:
+  docker:
+    name: Docker build and smoke test
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build the image and start both containers
+        run: |
+          docker compose up --build -d
+          docker compose ps
+          docker image ls
+
+      - name: Wait for the services
+        run: |
+          for i in $(seq 1 60); do
+            if curl -fsS http://localhost:8001/health && curl -fsS http://localhost:8002/health; then
+              echo; exit 0
+            fi
+            sleep 2
+          done
+          docker compose logs
+          exit 1
+
+      - name: Exercise the whole flow through the containers (demo mode)
+        run: |
+          python3 - <<'PY'
+          import json, os, urllib.request
+
+          def call(url, body=None, headers=None):
+              req = urllib.request.Request(url, json.dumps(body).encode() if body is not None else None,
+                                           {"content-type": "application/json", **(headers or {})})
+              return json.load(urllib.request.urlopen(req, timeout=120))
+
+          chat = lambda tid, msg: call("http://localhost:8002/chat", {"thread_id": tid, "message": msg})
+          erp_reports = lambda: call("http://localhost:8001/exception-reports", headers={"x-api-key": "dev-key"})
+
+          tid = "ci-docker"
+          health = call("http://localhost:8002/health")
+          print("health:", health)
+
+          r1 = chat(tid, "Can you check the status of purchase order 450012, compare it with the supplier invoice, and tell me whether there are any discrepancies?")
+          tools = [t["tool"] for t in r1["tool_trace"]]
+          print("\n--- answer ---\n" + r1["reply"] + "\n")
+          print("tools called:", tools)
+          assert "compare_po_and_invoice" in tools and "search_procurement_policy" in tools, tools
+          assert "450012" in r1["reply"] and "[POL-" in r1["reply"], "expected PO number and a policy citation"
+          assert r1["pending_approval"] is None
+
+          r2 = chat(tid, "Yes, file the exception report")
+          assert r2["pending_approval"] and r2["pending_approval"]["tool"] == "create_exception_report", r2
+          print("paused for approval:", json.dumps(r2["pending_approval"]["args"])[:300])
+          assert erp_reports() == [], "nothing may be written before approval"
+
+          r3 = call("http://localhost:8002/approve", {"thread_id": tid, "approved": True})
+          print("after approval:", r3["reply"])
+          assert "EXR-" in r3["reply"] and len(erp_reports()) == 1
+
+          with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as f:
+              f.write("## Docker build and smoke test: passed\n\n")
+              f.write(f"- Model: `{health['model']}`, embeddings: `{health['embeddings']}`\n")
+              f.write(f"- Tools called for PO 450012: `{', '.join(tools)}`\n")
+              f.write("- Approval gate paused before the write, and the ERP stayed empty until approved\n")
+              f.write(f"- Filed: {r3['reply']}\n")
+          PY
+
+      - name: Container logs
+        if: always()
+        run: docker compose logs --no-color | tail -60
+
+  real-llm:
+    name: Real LLM (Ollama) end-to-end
+    if: ${{ inputs.run_llm }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      MODEL: ${{ inputs.model }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Start Ollama and pull the model
+        run: |
+          docker run -d --name ollama -p 11434:11434 -v ollama:/root/.ollama \
+            -e OLLAMA_CONTEXT_LENGTH=8192 -e OLLAMA_KEEP_ALIVE=30m -e OLLAMA_NUM_PARALLEL=1 \
+            ollama/ollama
+          for i in $(seq 1 60); do curl -fsS http://localhost:11434/api/tags >/dev/null && break; sleep 2; done
+          docker exec ollama ollama pull "$MODEL"
+          docker exec ollama ollama list
+
+      - name: Install the app
+        run: pip install -r requirements.txt
+
+      - name: Start the ERP and the agent on the real model
+        run: |
+          nohup uvicorn erp_api.main:app --port 8001 > erp.log 2>&1 &
+          LLM_PROVIDER=ollama OLLAMA_MODEL="$MODEL" OLLAMA_BASE_URL=http://localhost:11434 \
+            EMBEDDING_BACKEND=hashing nohup uvicorn agent_service.main:app --port 8002 > agent.log 2>&1 &
+          for i in $(seq 1 60); do
+            curl -fsS http://localhost:8002/health && break
+            sleep 2
+          done
+          curl -fsS http://localhost:8002/health
+
+      - name: Ask the real model about PO 450012
+        timeout-minutes: 40
+        run: |
+          python3 - <<'PY'
+          import json, os, sys, urllib.request
+
+          def call(url, body=None, headers=None, timeout=1500):
+              req = urllib.request.Request(url, json.dumps(body).encode() if body is not None else None,
+                                           {"content-type": "application/json", **(headers or {})})
+              return json.load(urllib.request.urlopen(req, timeout=timeout))
+
+          chat = lambda tid, msg: call("http://localhost:8002/chat", {"thread_id": tid, "message": msg})
+          erp_reports = lambda: call("http://localhost:8001/exception-reports", headers={"x-api-key": "dev-key"})
+
+          tid, notes, ok = "ci-llm", [], True
+          health = call("http://localhost:8002/health")
+          print("health:", health)
+
+          r1 = chat(tid, "Can you check the status of purchase order 450012, compare it with the supplier invoice, and tell me whether there are any discrepancies?")
+          tools = [t["tool"] for t in r1["tool_trace"]]
+          print("\n--- model answer ---\n" + r1["reply"] + "\n")
+          print("tools called:", tools)
+          called = lambda name: name in tools
+          notes.append(("Called compare_po_and_invoice", called("compare_po_and_invoice")))
+          notes.append(("Called search_procurement_policy", called("search_procurement_policy")))
+          notes.append(("Answer cites a policy section like [POL-100 ...]", "[POL-" in r1["reply"]))
+          notes.append(("Answer mentions PO 450012", "450012" in r1["reply"]))
+          ok = called("compare_po_and_invoice")
+
+          filed = None
+          try:
+              r2 = chat(tid, "Yes, please file the exception report for this.")
+              print("\n--- second turn ---\n" + r2["reply"] + "\n")
+              paused = bool(r2["pending_approval"]) and r2["pending_approval"]["tool"] == "create_exception_report"
+              notes.append(("Paused for human approval before writing", paused))
+              if paused:
+                  notes.append(("ERP empty before approval", erp_reports() == []))
+                  r3 = call("http://localhost:8002/approve", {"thread_id": tid, "approved": True})
+                  filed = r3["reply"]
+                  print("after approval:", filed)
+                  notes.append(("Report filed after approval", len(erp_reports()) == 1))
+          except Exception as exc:  # report, do not hide, a failure of the second turn
+              notes.append((f"Second turn failed: {type(exc).__name__}: {exc}", False))
+
+          with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as f:
+              f.write(f"## Real LLM run: `{health['model']}` (CPU only, simulated data)\n\n")
+              f.write(f"Tools called for PO 450012: `{', '.join(tools) or 'none'}`\n\n")
+              for label, value in notes:
+                  f.write(f"- {'PASS' if value else 'NOT MET'}: {label}\n")
+              f.write("\n### Model answer to the first question\n\n" + r1["reply"] + "\n")
+              if filed:
+                  f.write("\n### After approval\n\n" + filed + "\n")
+          sys.exit(0 if ok else 1)
+          PY
+
+      - name: Service logs
+        if: always()
+        run: |
+          echo "--- agent.log"; tail -40 agent.log || true
+          echo "--- erp.log"; tail -15 erp.log || true
