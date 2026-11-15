@@ -82,7 +82,8 @@ uvicorn erp_api.main:app --port 8001
 LLM_PROVIDER=demo EMBEDDING_BACKEND=hashing uvicorn agent_service.main:app --port 8002
 ```
 
-Open <http://localhost:8002> and click *Check PO 450012 for discrepancies*.
+After you start the services, open <http://localhost:8002> and click *Check PO 450012 for discrepancies*.
+(That address only exists on your own computer while the two services above are running.)
 
 ### Using a real LLM
 
@@ -107,7 +108,7 @@ Without it, a lexical hashing embedder is used. It is fine for tests and demos b
 ### Docker
 
 ```bash
-docker compose up --build        # UI at http://localhost:8002
+docker compose up --build        # after the services start, UI at http://localhost:8002
 # with real embeddings: docker compose build --build-arg WITH_EMBEDDINGS=true
 ```
 
