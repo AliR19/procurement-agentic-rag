@@ -114,8 +114,32 @@ docker compose up --build        # UI at http://localhost:8002
 ## Tests
 
 ```bash
-python -m pytest -q      # 49 tests: matching rules, ERP API, chunking, retrieval, agent flow, approval gate, guardrails, HTTP API
+python -m pytest -q      # 51 tests: matching rules, ERP API, chunking, retrieval, agent flow, approval gate, guardrails, HTTP API
 ```
+
+The tests use a scripted model that misbehaves on purpose (skips the policy search, invents a citation,
+misreports the outcome) to prove each guardrail. They do not call a real LLM.
+
+## Tested with a real model
+
+The manual GitHub Actions workflow `docker-and-real-llm` builds the Docker images, runs the full flow, and then
+runs the same flow against a real local model: `llama3.1` (8B) served by Ollama on a CPU-only runner, with
+simulated data. It asks the PO 450012 question, approves the filing, and writes PASS / NOT MET checks to the run
+summary. Three runs, one question each:
+
+| Run | Code | What happened |
+|---|---|---|
+| 1 | No guardrails | The answer quoted a policy citation that was never retrieved (copied from the prompt's example), and after filing, the model said the report was still waiting for approval. |
+| 2 | Forced policy search, citation check, true outcome | The fake citation and the wrong status were gone. The answer still cited no policy section. |
+| 3 | Plus a Sources line | The answer lists the retrieved sections. The filing message states the real report id. |
+
+What the model did on its own in the guarded runs: it called the ERP tools and the match, but **it never searched
+the policy itself** (the guardrail ran the search), and **it wrote no policy citation itself** (the Sources line
+was appended). After approval its wording was still loose ("submitted for approval" and "approve for payment"),
+because the guardrail only checks that the true report id is stated, not every phrase.
+
+These are single runs of one small model, so treat them as an illustration of why the guardrails exist, not as an
+evaluation.
 
 ## Demo data
 
@@ -135,6 +159,9 @@ Regenerate with `python scripts/generate_data.py` (fixed seed).
 - **Simulated data only.** No real SAP/ERP integration. The mock ERP is in-memory and resets on restart.
 - **Demo mode is not an LLM.** It is a rule-based planner that exercises the tools, RAG and approval flow
   without a model. Natural-language flexibility needs a real model (`ollama` or `openai`).
+- **Small local models lean on the guardrails.** With `llama3.1` 8B the policy search was always run by the
+  guardrail, never chosen by the model, and answers needed the Sources line. A stronger model may need them
+  less; that was not measured (see "Tested with a real model").
 - **Retrieval quality is not benchmarked.** Tests check that known questions retrieve the right policy
   sections; there is no RAGAS-style evaluation yet. There is no cross-encoder reranker.
 - **No goods-receipt data.** Quantity checks treat the ordered quantity as the received quantity.
