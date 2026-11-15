@@ -116,7 +116,8 @@ def test_model_that_searches_on_its_own_is_not_flagged(scripted):
     run = scripted(investigate(search), lambda m: AIMessage(content=f"Price variance. {first_retrieved(m)}"))
     client = TestClient(create_app(graph=run.graph, model_label="scripted", embedder_name="hashing"))
     body = client.post("/chat", json={"thread_id": "g2", "message": QUESTION}).json()
-    assert body["guardrails"] == {"forced_policy_search": False, "citations_removed": [], "outcome_replaced": False}
+    assert body["guardrails"] == {"forced_policy_search": False, "citations_removed": [], "outcome_replaced": False,
+                                  "sources_appended": False}
     assert not any(t.get("forced") for t in body["tool_trace"])
 
 
@@ -126,6 +127,27 @@ def test_clean_match_does_not_force_a_policy_search(scripted):
                                            call("compare_po_and_invoice", po_number="450001")])
     r = scripted(ok, AIMessage(content="PO 450001 matches its invoice.")).say("Check PO 450001")
     assert "search_procurement_policy" not in tools_used(r)
+
+
+def test_sources_are_listed_when_the_model_searched_but_cited_nothing(scripted):
+    run = scripted(investigate(), SKIPPED_POLICY, AIMessage(content="Price is 12% above the PO, outside tolerance."))
+    client = TestClient(create_app(graph=run.graph, model_label="scripted", embedder_name="hashing"))
+    body = client.post("/chat", json={"thread_id": "g3", "message": QUESTION}).json()
+    assert body["guardrails"]["sources_appended"] is True
+    head, listed = body["reply"].split("Policy passages retrieved for this answer: ")
+    assert head.startswith("Price is 12% above the PO")
+    cites = listed.split("; ")
+    assert 1 <= len(cites) <= 3 and all(c.startswith("[POL-") or c.startswith("[AGR-") for c in cites)
+    retrieved = g.retrieved_citations(run.graph.get_state({"configurable": {"thread_id": "g3"}}).values["messages"])
+    assert set(cites) <= retrieved  # only passages the search really returned
+
+
+def test_no_sources_line_when_the_policy_was_not_searched(scripted):
+    ok = AIMessage(content="", tool_calls=[call("get_purchase_order", po_number="450001"),
+                                           call("get_invoice_details", po_number="450001"),
+                                           call("compare_po_and_invoice", po_number="450001")])
+    r = scripted(ok, AIMessage(content="PO 450001 matches its invoice.")).say("Check PO 450001")
+    assert r["messages"][-1].content == "PO 450001 matches its invoice."
 
 
 # ---------------------------------------------------------------- outcome of the write

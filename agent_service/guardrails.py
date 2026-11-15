@@ -7,6 +7,8 @@ These checks do not rely on the model behaving:
                           model did not ask for it, the graph runs it.
 * verify_citations      : a citation such as [POL-100 2. Matching tolerances] may only appear in an
                           answer if search_procurement_policy actually returned it in this conversation.
+* Sources line          : if the policy was searched for this answer but the model cited nothing, the
+                          retrieved citations are listed, so an answer is never left without its sources.
 * write_outcome         : after the write tool runs (or is rejected) the answer must state the real
                           outcome. If the model's message does not, it is replaced by the true one.
 """
@@ -51,6 +53,19 @@ def retrieved_citations(messages: list[BaseMessage]) -> set[str]:
             if isinstance(data, list):
                 found.update(_norm(h["citation"]) for h in data if isinstance(h, dict) and h.get("citation"))
     return found
+
+
+def turn_citations(messages: list[BaseMessage]) -> list[str]:
+    """Citations the policy search returned in the current turn, in retrieval order."""
+    seen: list[str] = []
+    for m in _current_turn(messages):
+        if isinstance(m, ToolMessage) and m.name == POLICY_TOOL:
+            data = _json(m)
+            for h in data if isinstance(data, list) else []:
+                cite = _norm(h.get("citation", "")) if isinstance(h, dict) else ""
+                if cite and cite not in seen:
+                    seen.append(cite)
+    return seen
 
 
 def policy_query_for(comparison: dict[str, Any]) -> str:
@@ -129,7 +144,7 @@ def finalize_reply(reply: AIMessage, history: list[BaseMessage]) -> AIMessage:
     if reply.tool_calls or not isinstance(reply.content, str):
         return reply
     text = reply.content
-    info: dict[str, Any] = {"citations_removed": [], "outcome_replaced": False}
+    info: dict[str, Any] = {"citations_removed": [], "outcome_replaced": False, "sources_appended": False}
 
     outcome = write_outcome(history)
     if outcome:
@@ -141,5 +156,10 @@ def finalize_reply(reply: AIMessage, history: list[BaseMessage]) -> AIMessage:
             text, info["outcome_replaced"] = truth, True
 
     text, info["citations_removed"] = verify_citations(text, retrieved_citations(history))
+
+    retrieved_now = turn_citations(history)
+    if retrieved_now and not _CITATION.search(text):  # the policy was searched but the answer cites nothing
+        text = text.rstrip() + "\n\nPolicy passages retrieved for this answer: " + "; ".join(retrieved_now[:3])
+        info["sources_appended"] = True
     return reply.model_copy(update={"content": text,
                                     "additional_kwargs": {**reply.additional_kwargs, "guardrails": info}})

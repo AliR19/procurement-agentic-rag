@@ -152,7 +152,8 @@ jobs:
           notes.append(("Model called compare_po_and_invoice", called("compare_po_and_invoice")))
           notes.append(("Model searched the policy by itself (no guardrail needed)", not guard1["forced_policy_search"]))
           notes.append(("Model cited only retrieved policy text (no citations removed)", not guard1["citations_removed"]))
-          notes.append(("Final answer cites a retrieved policy section", "[POL-" in r1["reply"] or "[AGR-" in r1["reply"]))
+          notes.append(("Model wrote a policy citation itself (no Sources line appended)", not guard1["sources_appended"]))
+          notes.append(("Final answer lists a retrieved policy section", "[POL-" in r1["reply"] or "[AGR-" in r1["reply"]))
           notes.append(("Answer mentions PO 450012", "450012" in r1["reply"]))
           ok = called("compare_po_and_invoice")
 

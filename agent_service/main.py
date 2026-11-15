@@ -90,6 +90,7 @@ def create_app(graph: Any | None = None, model_label: str = "custom", embedder_n
                                             for m in turn),
                 "citations_removed": info.get("citations_removed", []),
                 "outcome_replaced": info.get("outcome_replaced", False),
+                "sources_appended": info.get("sources_appended", False),
             },
         }
 
