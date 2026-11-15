@@ -157,8 +157,10 @@ Regenerate with `python scripts/generate_data.py` (fixed seed).
 ## Limitations (read before relying on this)
 
 - **Simulated data only.** No real SAP/ERP integration. The mock ERP is in-memory and resets on restart.
-- **Demo mode is not an LLM.** It is a rule-based planner that exercises the tools, RAG and approval flow
-  without a model. Natural-language flexibility needs a real model (`ollama` or `openai`).
+- **Demo mode is not an LLM.** `LLM_PROVIDER=demo` (the Quick start, the Docker smoke test, the screenshots)
+  is a rule-based planner that exercises the tools, RAG and approval flow without a model. The real-model path
+  was run with `ollama` and `llama3.1` 8B only (see "Tested with a real model"). The `openai` provider is wired
+  up but has not been run against the OpenAI API.
 - **Small local models lean on the guardrails.** With `llama3.1` 8B the policy search was always run by the
   guardrail, never chosen by the model, and answers needed the Sources line. A stronger model may need them
   less; that was not measured (see "Tested with a real model").
